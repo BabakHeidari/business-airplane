@@ -1,0 +1,18 @@
+services:
+  web:
+    build: .
+    command: flask --app wsgi:app run --host=0.0.0.0 --port=5000
+    env_file: .env
+    ports: ["5000:5000"]
+    depends_on: [db]
+    volumes: [".:/app"]
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: bfs
+      POSTGRES_PASSWORD: bfs_dev_password
+      POSTGRES_DB: business_flight_simulator
+    ports: ["5432:5432"]
+    volumes: ["postgres_data:/var/lib/postgresql/data"]
+volumes:
+  postgres_data:
