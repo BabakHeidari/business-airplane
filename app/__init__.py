@@ -8,6 +8,7 @@ def create_app(config_name: str | None = None):
     app = Flask(__name__)
     config_name = config_name or os.getenv("FLASK_ENV", "development")
     app.config.from_object(config_by_name.get(config_name, config_by_name["development"]))
+    os.makedirs(app.instance_path, exist_ok=True)
 
     db.init_app(app)
     migrate.init_app(app, db)
