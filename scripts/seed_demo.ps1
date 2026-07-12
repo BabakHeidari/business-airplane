@@ -7,7 +7,8 @@ Set-Location $ProjectRoot
 . .\.venv\Scripts\Activate.ps1
 
 $env:FLASK_ENV = "development"
-$env:DATABASE_URL = "sqlite:///instance/app.db"
+$SqlitePath = (Join-Path $ProjectRoot "instance\app.db").Replace("\", "/")
+$env:DATABASE_URL = "sqlite:///$SqlitePath"
 $env:PYTHONPATH = $ProjectRoot
 
 if (-not (Test-Path "instance")) {
