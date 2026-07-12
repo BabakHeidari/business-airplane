@@ -40,7 +40,8 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements-dev.txt
 Copy-Item .env.example .env
 $env:FLASK_ENV = "development"
-$env:DATABASE_URL = "sqlite:///instance/app.db"
+$SqlitePath = (Join-Path (Get-Location).Path "instance\app.db").Replace("\", "/")
+$env:DATABASE_URL = "sqlite:///$SqlitePath"
 flask --app wsgi:app db upgrade
 python seed/demo.py
 flask --app wsgi:app run
@@ -116,7 +117,8 @@ Apply existing migrations locally with SQLite:
 ```powershell
 .\.venv\Scripts\Activate.ps1
 $env:FLASK_ENV = "development"
-$env:DATABASE_URL = "sqlite:///instance/app.db"
+$SqlitePath = (Join-Path (Get-Location).Path "instance\app.db").Replace("\", "/")
+$env:DATABASE_URL = "sqlite:///$SqlitePath"
 flask --app wsgi:app db upgrade
 ```
 
@@ -125,7 +127,8 @@ Create a new migration after model changes:
 ```powershell
 .\.venv\Scripts\Activate.ps1
 $env:FLASK_ENV = "development"
-$env:DATABASE_URL = "sqlite:///instance/app.db"
+$SqlitePath = (Join-Path (Get-Location).Path "instance\app.db").Replace("\", "/")
+$env:DATABASE_URL = "sqlite:///$SqlitePath"
 flask --app wsgi:app db migrate -m "describe change"
 flask --app wsgi:app db upgrade
 ```

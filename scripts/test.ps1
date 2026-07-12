@@ -6,7 +6,8 @@ $ErrorActionPreference = "Stop"
 
 $env:FLASK_ENV = "testing"
 $env:TEST_DATABASE_URL = "sqlite:///:memory:"
+$env:PYTHONPATH = $ProjectRoot
 
-ruff check .
-pytest
+python -m ruff check .
+python -m pytest
 
