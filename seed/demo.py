@@ -1,12 +1,19 @@
-from app import create_app
-from app.extensions import db
-from app.models import BusinessProfile, Organization, OrganizationMembership, Role, User
+import os
+import sys
+
+PROJECT_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
 
 OWNER_EMAIL = "owner@northstar.example"
 CONSULTANT_EMAIL = "consultant@northstar.example"
 DEMO_PASSWORD = "NorthstarDemo123!"
 
 def run():
+    from app import create_app
+    from app.extensions import db
+    from app.models import BusinessProfile, Organization, OrganizationMembership, Role, User
+
     app = create_app()
     with app.app_context():
         db.create_all()
